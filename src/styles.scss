@@ -1,0 +1,153 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+// @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
+
+:root {
+  --green-color: #0aad0a;
+  --light-color: #f0f3f2;
+  --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
+    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
+    rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
+  --font-family: "Mona Sans", serif;
+  --rating-color: #ffc908;
+}
+
+body {
+  font-family: var(--font-family) !important;
+}
+
+.container{
+  @apply w-[90%] mx-auto;
+}
+
+.nav-link {
+  transition: unset !important;
+}
+
+.active-link {
+  background-color: var(--green-color) !important;
+  color: var(--green-color) !important;
+  border-radius: 5px;
+}
+
+.owl-carousel{
+  position: relative;
+
+  .owl-dots{
+    .owl-dot{
+      &.active span{
+        background-color: black;
+      }
+
+      span{
+        background-color: white;
+        border: 1px solid black;
+        padding: 5px;
+        transition: background-color 0.3s;
+
+        &:hover{
+          background-color: black;
+        }
+      }
+    }
+  }
+
+  .owl-nav [class*=owl-] {
+    color: rgb(145, 145, 145) !important;
+    background: transparent;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover{
+      background-color: transparent;
+      color: black !important;
+    }
+  }
+
+  .owl-nav{
+    .owl-prev{
+      left: -55px;
+    }
+
+    .owl-next{
+      right: -55px;
+    }
+  }
+}
+
+.sectionTitle{
+  @apply capitalize font-semibold text-2xl;
+}
+
+.rating-color {
+  color: var(--rating-color);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+a, a:hover {
+  text-decoration: none;
+}
+
+.product {
+  border-radius: 5px;
+  border: solid 1px rgb(203, 203, 203);
+  transition: box-shadow 0.5s;
+  overflow: hidden;
+}
+
+.product:hover {
+  box-shadow: 0 0 8px gray;
+}
+
+.font-sm {
+  font-size: 12px;
+}
+
+.text-main {
+  color: var(--green-color);
+}
+
+.bg-main {
+  background-color: var(--green-color) !important;
+}
+
+.bg-main-light {
+  background-color: var(--light-color) !important;
+}
+
+.btn-main {
+  background-color: black;
+  padding: 7px 20px;
+  border: 1px solid black;
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-main:hover {
+  background-color: white;
+  color: black;
+}
+
+.btn-main:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+}
+
+.btn-main:disabled:hover {
+  background-color: #ccc;
+}

@@ -1,0 +1,75 @@
+<!-- Main Slider -->
+<section>
+  <owl-carousel-o [options]="mainSliderOptions">
+    <ng-template carouselSlide>
+      <img src="./images/img6.avif" alt="">
+    </ng-template>
+    <ng-template carouselSlide>
+      <img src="./images/img7.avif" alt="">
+    </ng-template>
+    <ng-template carouselSlide>
+      <img src="./images/img3.avif" alt="">
+    </ng-template>
+    <ng-template carouselSlide>
+      <img src="./images/img1.avif" alt="">
+    </ng-template>
+  </owl-carousel-o>
+</section>
+
+
+<!-- Category Slider -->
+<section class="mt-20">
+  <div class="container">
+    <div class="flex justify-between">
+      <h1 class="sectionTitle">Categories</h1>
+      <a class="capitalize border-b-2 border-black font-medium" routerLink="/categories">View all categories <span></span></a>
+    </div>
+    <div class="container">
+      <div class="categSlider mt-4">
+        <owl-carousel-o [options]="catSliderOptions">
+          @for (category of allCategories?.slice(0,6); track category._id) {
+            <ng-template carouselSlide [id]="category._id">
+              <img [src]="category.image" class="h-[320px] " [alt]="category.name">
+              <h2 class="mt-2 text-center">{{category.name}}</h2>
+            </ng-template>
+          }
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Products -->
+<section class="my-20">
+  <div class="container">
+    <h1 class="sectionTitle">Explore our products</h1>
+    <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      @for (product of allProducts?.slice(0,15); track product._id) {
+        <div class="product p-3 cursor-pointer" [routerLink]="['/product-details', product._id]">
+          <div class="productImg w-[85%] mx-auto relative overflow-hidden">
+            <img [src]="product.imageCover" class="block" [alt]="product.title">
+
+            <div>
+              <button class="uppercase btn-main w-[90%] block absolute bottom-[-50%] left-1/2 translate-x-[-50%]"><span class="me-2"><i class="fa-solid fa-cart-plus"></i></span>Add to cart</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap justify-between mt-4">
+              <h2 class="font-medium">{{product.title.split(' ').slice(0,2).join(' ')}}</h2>
+              <h3 class="font-medium">{{product.price}} EGP</h3>
+            </div>
+
+            <div class="flex flex-wrap justify-between mt-3">
+              <h3 class="text-sm font-medium text-gray-500">{{product.category.name}}</h3>
+              <h3 class="text-sm font-medium text-gray-500">{{product.ratingsAverage}} <span class="rating-color"><i class="fa-solid fa-star"></i></span></h3>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <button class="btn-main capitalize block mx-auto mt-16" routerLink="/products">View all products</button>
+  </div>
+</section>
