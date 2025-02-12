@@ -18,12 +18,12 @@ export const routes: Routes = [
   // {path: '**', component: NotFoundComponent, title: 'Error 404'},
 
   {path: '', component: AuthLayoutComponent, children: [
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent, title: 'Login'},
     {path: 'register', component: RegisterComponent, title: 'Register'},
   ]},
 
   {path: '', component: MainLayoutComponent, children: [
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent, title: 'Home'},
     {path: 'products', loadComponent: ()=> import('./pages/products/products.component').then((c)=> c.ProductsComponent), title: 'Products'},
     {path: 'product-details/:p_id', loadComponent: ()=> import('./pages/product-details/product-details.component').then((c)=> c.ProductDetailsComponent)},
