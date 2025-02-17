@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthenticationService } from '../../core/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,38 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  errorMessage!:string;
+  isLoading:boolean = false;
+
+  private _AuthenticationService = inject(AuthenticationService);
+  private _Router = inject(Router);
+
   loginForm:FormGroup = new FormGroup({
-    email:new FormControl(null, Validators.required),
-    password:new FormControl(null, Validators.required)
+    email:new FormControl(null, [Validators.required, Validators.email]),
+    password:new FormControl(null, [Validators.required]),
   })
 
   login(){
-    console.log(this.loginForm);
+    if(this.loginForm.valid){
+      this.isLoading = true;
+
+      this._AuthenticationService.signin(this.loginForm.value).subscribe({
+        next: (res)=>{
+          console.log(res);
+          sessionStorage.setItem('token', res.token);
+          this._AuthenticationService.decodeToken();
+          this.isLoading = false;
+          this._Router.navigate(['/home']);
+        },
+        error: (err)=>{
+          this.errorMessage = err.error.message;
+          console.log(err.error.message);
+          this.isLoading = false;
+        }
+      })
+      console.log(this.loginForm);
+    } else{
+      this.loginForm.markAllAsTouched();
+    }
   }
 }

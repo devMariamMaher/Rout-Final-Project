@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthenticationService } from '../../core/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,5 +9,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  private _AuthenticationService = inject(AuthenticationService);
+  private _Router = inject(Router);
 
+  logout():void{
+    sessionStorage.removeItem('token');
+    this._AuthenticationService.userToken = null;
+    this._Router.navigate(['/login']);
+  }
 }

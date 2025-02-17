@@ -26,6 +26,10 @@ body {
   @apply w-[90%] mx-auto;
 }
 
+.invalidInput{
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500 !important;
+}
+
 .nav-link {
   transition: unset !important;
 }
@@ -116,9 +120,5 @@ a, a:hover {
 
 .btn-main:disabled {
   cursor: not-allowed;
-  background-color: #ccc;
-}
-
-.btn-main:disabled:hover {
   background-color: #ccc;
 }

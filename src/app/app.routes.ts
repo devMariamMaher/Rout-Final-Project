@@ -5,25 +5,16 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { authenticationGuard } from './core/guards/authrntication/authentication.guard';
 
 export const routes: Routes = [
-  // {path: '', redirectTo: 'home', pathMatch:'full'},
-  // {path: 'home', component: HomeComponent, title: 'Home'},
-  // {path: 'products', component: ProductsComponent, title: 'Products'},
-  // {path: 'categories', component: CategoriesComponent, title: 'Categories'},
-  // {path: 'brands', component: BrandsComponent, title: 'Brands'},
-  // {path: 'cart', component: CartComponent, title: 'Cart'},
-  // {path: 'login', component: LoginComponent, title: 'Login'},
-  // {path: 'register', component: RegisterComponent, title: 'Register'},
-  // {path: '**', component: NotFoundComponent, title: 'Error 404'},
-
   {path: '', component: AuthLayoutComponent, children: [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent, title: 'Login'},
     {path: 'register', component: RegisterComponent, title: 'Register'},
   ]},
 
-  {path: '', component: MainLayoutComponent, children: [
+  {path: '', component: MainLayoutComponent, canActivate:[authenticationGuard], children: [
     {path: 'home', component: HomeComponent, title: 'Home'},
     {path: 'products', loadComponent: ()=> import('./pages/products/products.component').then((c)=> c.ProductsComponent), title: 'Products'},
     {path: 'product-details/:p_id', loadComponent: ()=> import('./pages/product-details/product-details.component').then((c)=> c.ProductDetailsComponent)},
