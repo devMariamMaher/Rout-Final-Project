@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withViewTransitions } from '@angular/router';
+import { provideRouter, withHashLocation, withViewTransitions } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { spinnerInterceptor } from './core/interceptors/spinner/spinner.intercep
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withViewTransitions()),
+    provideRouter(routes, withViewTransitions(), withHashLocation()),
     provideHttpClient(withFetch(), withInterceptors([requestHeaderInterceptor, responseErrorInterceptor, spinnerInterceptor])),
     importProvidersFrom(BrowserAnimationsModule, NgxSpinnerModule),
     provideToastr(),
