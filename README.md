@@ -1,6 +1,9 @@
 # E-Commerce Website
 
 ## Description
+
+[Live Demo](https://fresh-cart-ivory-two.vercel.app/)
+
 This is a fully functional e-commerce website built using **Angular 19** and **Tailwind CSS**. Users can browse products, add items to their cart and wishlist, and proceed to checkout. The website supports two payment methods:
 - **Cash on Delivery (COD):** Users are redirected to an order details page after placing an order.
 - **Online Payment:** Users are redirected to a payment website to complete their transaction, then navigated back to the order details page.
