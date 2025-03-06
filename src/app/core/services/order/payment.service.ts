@@ -28,7 +28,7 @@ export class PaymentService {
   }
 
   checkoutSession(cartId:string, data:object):Observable<any>{
-    return this._HttpClient.post(`${environment.baseUrl}/api/v1/orders/checkout-session/${cartId}?url=#/${environment.domain}`, {'shippingAddress': data})
+    return this._HttpClient.post(`${environment.baseUrl}/api/v1/orders/checkout-session/${cartId}?url=${environment.domain}/#`, {'shippingAddress': data})
   }
 
   getUserOrders():Observable<any>{
