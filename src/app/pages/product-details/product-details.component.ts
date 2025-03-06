@@ -4,7 +4,9 @@ import { ProductsService } from '../../core/services/products/products.service';
 import { IProduct } from '../../core/interfaces/procducts/iproduct';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { CurrencyPipe } from '@angular/common';
-import { flatMap } from 'rxjs';
+import { CartService } from '../../core/services/cart/cart.service';
+import { ToastrService } from 'ngx-toastr';
+import { WishlistService } from '../../core/services/wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -14,14 +16,17 @@ import { flatMap } from 'rxjs';
 })
 export class ProductDetailsComponent implements OnInit {
   productID!:string;
-  productDetails:IProduct = {} as IProduct;
-  productQuantity:number = 1;
+  productDetails:IProduct | null = {} as IProduct;
+  productQuantity!:number;
 
   @ViewChild('incBtn') incBtn!:ElementRef;
   @ViewChild('decBtn') decBtn!:ElementRef;
 
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private _ProductsService = inject(ProductsService);
+  private _CartService = inject(CartService);
+    private _WishlistService = inject(WishlistService);
+  private toastr = inject(ToastrService)
 
   productImgs: OwlOptions = {
     loop: true,
@@ -39,6 +44,26 @@ export class ProductDetailsComponent implements OnInit {
     nav: false
   }
 
+  ngOnInit(): void {
+    this._ActivatedRoute.paramMap.subscribe({
+      next: (param)=>{
+        this.productID = param.get('p_id')!;
+      }
+    })
+
+    this.productQuantity = this._CartService.productQuantity()
+
+    this._ProductsService.getSpecificProduct(this.productID).subscribe({
+      next: (res)=>{
+        this.productDetails = res.data
+        // console.log(this.productDetails);
+      },
+      error: (err)=>{
+        console.log(err);
+      }
+    })
+  }
+
   increaseQuantity():void{
     this.productQuantity++;
   }
@@ -47,17 +72,51 @@ export class ProductDetailsComponent implements OnInit {
     this.productQuantity--;
   }
 
-  ngOnInit(): void {
-    this._ActivatedRoute.paramMap.subscribe({
-      next: (param)=>{
-        this.productID = param.get('p_id')!;
+  addToCart(){
+    this._CartService.addProductToCart(this.productID).subscribe({
+      next: (res)=>{
+        this.toastr.success(res.message, '',
+          {
+            timeOut: 2000,
+            progressBar: true,
+            progressAnimation: 'decreasing',
+            toastClass: 'toastStyle',
+            positionClass: 'toastPosition'
+          }
+        )
+
+        this._CartService.cartCount.next(res.numOfCartItems);
+
+        this._CartService.updateCartProductQuantity(this.productID, this.productQuantity).subscribe({
+          next: (res)=>{
+            console.log(res);
+          }
+        })
+
+        this.productQuantity = 1
+
+        console.log(res);
+      },
+      error: (err)=>{
+        console.log(err);
       }
     })
+  }
 
-    this._ProductsService.getSpecificProduct(this.productID).subscribe({
+  addToWishlist(){
+    this._WishlistService.addProductToWishlist(this.productID).subscribe({
       next: (res)=>{
-        this.productDetails = res.data
-        // console.log(this.productDetails);
+        this.toastr.success(res.message, '',
+          {
+            timeOut: 2000,
+            progressBar: true,
+            progressAnimation: 'decreasing',
+            toastClass: 'toastStyle',
+            positionClass: 'toastPosition'
+          }
+        )
+
+        console.log(res);
       },
       error: (err)=>{
         console.log(err);

@@ -1,0 +1,16 @@
+ul{
+  li{
+    a{
+      transition: color 0.3s;
+      &:hover{
+        color: black;
+      }
+    }
+  }
+}
+
+.active{
+  color: black;
+  font-weight: 600;
+  border-bottom: 2px solid black;
+}

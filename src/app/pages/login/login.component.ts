@@ -27,19 +27,17 @@ export class LoginComponent {
 
       this._AuthenticationService.signin(this.loginForm.value).subscribe({
         next: (res)=>{
-          console.log(res);
           sessionStorage.setItem('token', res.token);
           this._AuthenticationService.decodeToken();
           this.isLoading = false;
           this._Router.navigate(['/home']);
+          console.log(this._AuthenticationService.userToken);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
-          console.log(err.error.message);
           this.isLoading = false;
         }
       })
-      console.log(this.loginForm);
     } else{
       this.loginForm.markAllAsTouched();
     }

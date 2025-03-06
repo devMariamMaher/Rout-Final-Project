@@ -82,6 +82,21 @@ body {
   }
 }
 
+.toastStyle{
+  width: fit-content;
+  padding: 15px;
+  margin-block: 10px;
+  border-radius: 10px;
+  color: white;
+}
+
+.toastPosition{
+  position: fixed;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .sectionTitle{
   @apply capitalize font-semibold text-2xl;
 }

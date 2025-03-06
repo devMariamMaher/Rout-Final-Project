@@ -1,1 +1,23 @@
-<p>categories works!</p>
+@if(categoriesData != null){
+  <section class="my-20">
+    <div class="container">
+      <h1 class="sectionTitle">Our Categories</h1>
+
+      <div class="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        @for (category of categoriesData; track category._id){
+          <div class="product p-3 cursor-pointer relative">
+            <div>
+              <div class="categoryImg h-[250px] mx-auto">
+                <img [src]="category.image" class="h-[100%] object-contain mx-auto" [alt]="category.name">
+              </div>
+
+              <div class="mt-4">
+                <h2 class="font-medium text-center">{{category.name}}</h2>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}

@@ -31,17 +31,14 @@ export class RegisterComponent {
 
       this._AuthenticationService.signup(this.registerForm.value).subscribe({
         next: (res)=>{
-          console.log(res);
           this.isLoading = false;
           this._Router.navigate(['/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
-          console.log(err.error.message);
           this.isLoading = false;
         }
       })
-      console.log(this.registerForm);
     } else{
       this.registerForm.markAllAsTouched();
     }

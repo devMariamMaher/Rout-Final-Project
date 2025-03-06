@@ -18,58 +18,71 @@
 
 
 <!-- Category Slider -->
-<section class="mt-20">
-  <div class="container">
-    <div class="flex justify-between">
-      <h1 class="sectionTitle">Categories</h1>
-      <a class="capitalize border-b-2 border-black font-medium" routerLink="/categories">View all categories <span></span></a>
-    </div>
+@if(allCategories != null){
+  <section class="mt-20">
     <div class="container">
-      <div class="categSlider mt-4">
-        <owl-carousel-o [options]="catSliderOptions">
-          @for (category of allCategories?.slice(0,6); track category._id) {
-            <ng-template carouselSlide [id]="category._id">
-              <img [src]="category.image" class="h-[320px] " [alt]="category.name">
-              <h2 class="mt-2 text-center">{{category.name}}</h2>
-            </ng-template>
-          }
-        </owl-carousel-o>
+      <div class="flex justify-between">
+        <h1 class="sectionTitle">Categories</h1>
+        <a class="capitalize border-b-2 border-black font-medium" routerLink="/categories">View all categories <span></span></a>
+      </div>
+      <div class="container">
+        <div class="categSlider mt-4">
+          <owl-carousel-o [options]="catSliderOptions">
+            @for (category of allCategories?.slice(0,6); track category._id) {
+              <ng-template carouselSlide [id]="category._id">
+                <img [src]="category.image" class="h-[320px] " [alt]="category.name">
+                <h2 class="mt-2 text-center">{{category.name}}</h2>
+              </ng-template>
+            }
+          </owl-carousel-o>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+}
 
 
 <!-- Products -->
-<section class="my-20">
-  <div class="container">
-    <h1 class="sectionTitle">Explore our products</h1>
-    <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      @for (product of allProducts?.slice(0,15); track product._id) {
-        <div class="product p-3 cursor-pointer" [routerLink]="['/product-details', product._id]">
-          <div class="productImg w-[85%] mx-auto relative overflow-hidden">
-            <img [src]="product.imageCover" class="block" [alt]="product.title">
+@if(allProducts != null){
+  <section class="my-20">
+    <div class="container">
+      <h1 class="sectionTitle">Explore our products</h1>
+      <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        @for (product of allProducts?.slice(0,15); track product._id) {
+          <div class="product p-3 cursor-pointer relative">
+            <div [routerLink]="['/product-details', product._id]">
+              <div class="productImg w-[85%] mx-auto">
+                <img [src]="product.imageCover" class="block" [alt]="product.title">
+              </div>
+
+              <div>
+                <div class="flex flex-wrap justify-between mt-4">
+                  <h2 class="font-medium">{{product.title.split(' ').slice(0,2).join(' ')}}</h2>
+                  <h3 class="font-medium">{{product.price | currency:'EGP'}}</h3>
+                </div>
+
+                <div class="flex flex-wrap justify-between mt-3">
+                  <h3 class="text-sm font-medium text-gray-500">{{product.category.name}}</h3>
+                  <h3 class="text-sm font-medium text-gray-500">{{product.ratingsAverage}} <span class="rating-color"><i class="fa-solid fa-star"></i></span></h3>
+                </div>
+              </div>
+            </div>
 
             <div>
-              <button class="uppercase btn-main w-[90%] block absolute bottom-[-50%] left-1/2 translate-x-[-50%]"><span class="me-2"><i class="fa-solid fa-cart-plus"></i></span>Add to cart</button>
+              <button (click)="addToCart(product._id)" class="addToCart uppercase btn-main w-[70%] left-[50%] translate-x-[-50%] absolute bottom-[-50%]"><span class="me-2"><i class="fa-solid fa-cart-plus"></i></span>Add to cart</button>
+
+              <!-- @if(addedToWishlist == false){ -->
+                <button #wishlistIcon (click)="addToWishlist(product._id)" class="addToWishlist text-xl bg-white p-1 w-[30px] h-[30px] rounded-full flex justify-center items-center absolute top-[5%] right-[8%] hover:text-red-600 duration-[0.3s]"><span><i class="fa-regular fa-heart"></i></span></button>
+              <!-- } @else { -->
+                <button #redWishlistIcon class="hidden addToWishlist text-xl bg-white p-1 w-[30px] h-[30px] rounded-full flex justify-center items-center absolute top-[5%] right-[8%] text-red-600 hover:text-red-400 duration-[0.3s]"><span class=""><i class="fa-solid fa-heart"></i></span></button>
+              <!-- } -->
+
             </div>
           </div>
+        }
+      </div>
 
-          <div>
-            <div class="flex flex-wrap justify-between mt-4">
-              <h2 class="font-medium">{{product.title.split(' ').slice(0,2).join(' ')}}</h2>
-              <h3 class="font-medium">{{product.price}} EGP</h3>
-            </div>
-
-            <div class="flex flex-wrap justify-between mt-3">
-              <h3 class="text-sm font-medium text-gray-500">{{product.category.name}}</h3>
-              <h3 class="text-sm font-medium text-gray-500">{{product.ratingsAverage}} <span class="rating-color"><i class="fa-solid fa-star"></i></span></h3>
-            </div>
-          </div>
-        </div>
-      }
+      <button class="btn-main capitalize block mx-auto mt-16" routerLink="/products">View all products</button>
     </div>
-
-    <button class="btn-main capitalize block mx-auto mt-16" routerLink="/products">View all products</button>
-  </div>
-</section>
+  </section>
+}

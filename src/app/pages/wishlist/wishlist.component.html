@@ -1,0 +1,42 @@
+@if(wishlistData != null){
+  <section class="my-20">
+    <div class="container">
+      <h1 class="sectionTitle">Your Wishlist</h1>
+
+      @if (!wishlistData?.data?.length) {
+        <img src="./images/emptyWishlist.png" class="w-[30%] mx-auto mt-10" alt="Cart is empty">
+      }
+
+      <div class="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        @for (wishlistItem of wishlistData.data; track wishlistItem){
+          <div class="product p-3 cursor-pointer relative">
+            <div [routerLink]="['/product-details', wishlistItem._id]">
+              <div class="productImg w-[85%] mx-auto">
+                <img [src]="wishlistItem.imageCover" class="block" [alt]="wishlistItem.title">
+              </div>
+
+              <div>
+                <div class="flex flex-wrap justify-between mt-4">
+                  <h2 class="font-medium">{{wishlistItem.title?.split(' ')?.slice(0,2)?.join(' ')}}</h2>
+                  <h3 class="font-medium">{{wishlistItem.price | currency:'EGP'}}</h3>
+                </div>
+
+                <div class="flex flex-wrap justify-between mt-3">
+                  <h3 class="text-sm font-medium text-gray-500">{{wishlistItem.category?.name}}</h3>
+                  <h3 class="text-sm font-medium text-gray-500">{{wishlistItem.ratingsAverage}} <span class="rating-color"><i class="fa-solid fa-star"></i></span></h3>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <button (click)="addToCart(wishlistItem._id)" class="addToCart uppercase btn-main w-[70%] left-[50%] translate-x-[-50%] absolute bottom-[-50%]"><span class="me-2"><i class="fa-solid fa-cart-plus"></i></span>Add to cart</button>
+
+              <button (click)="removeFromWishlist(wishlistItem._id)" class="addToWishlist text-xl absolute right-[8%] top-[5%] text-red-600 hover:text-red-400 duration-[0.3s]"><span class=""><i class="fa-solid fa-heart"></i></span></button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+}
