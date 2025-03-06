@@ -13,7 +13,7 @@ import { spinnerInterceptor } from './core/interceptors/spinner/spinner.intercep
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withViewTransitions(), withHashLocation()),
+    provideRouter(routes, withViewTransitions()),
     provideHttpClient(withFetch(), withInterceptors([requestHeaderInterceptor, responseErrorInterceptor, spinnerInterceptor])),
     importProvidersFrom(BrowserAnimationsModule, NgxSpinnerModule),
     provideToastr(),
