@@ -37,6 +37,5 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem('token');
     this._AuthenticationService.userToken = null;
     this._Router.navigate(['/login']);
-    console.log(this._AuthenticationService.userToken);
   }
 }

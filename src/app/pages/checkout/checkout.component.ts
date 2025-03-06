@@ -39,7 +39,6 @@ export class CheckoutComponent implements OnInit {
       if(this.cash.nativeElement.checked){
         this._PaymentService.createCashOrder(this.cartId, this.detailsForm.value).subscribe({
           next: (res)=>{
-            console.log(res);
             if(res.status == 'success'){
               this._Router.navigate(['/allorders']);
 
@@ -54,7 +53,6 @@ export class CheckoutComponent implements OnInit {
       } else{
         this._PaymentService.checkoutSession(this.cartId, this.detailsForm.value).subscribe({
           next: (res)=>{
-            console.log(res);
             if(res.status == 'success'){
               window.open(res.session.url, '_self');
             }

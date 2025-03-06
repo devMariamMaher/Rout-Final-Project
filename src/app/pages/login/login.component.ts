@@ -31,7 +31,6 @@ export class LoginComponent {
           this._AuthenticationService.decodeToken();
           this.isLoading = false;
           this._Router.navigate(['/home']);
-          console.log(this._AuthenticationService.userToken);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;

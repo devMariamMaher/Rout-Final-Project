@@ -27,10 +27,8 @@ export class ForgotPasswordComponent {
         next: (res)=>{
           this.isLoading = false;
           this._Router.navigate(['/verifyCode']);
-          console.log(res);
         },
         error: (err)=>{
-          console.log(err);
           this.isLoading = false;
         }
       })

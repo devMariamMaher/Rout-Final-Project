@@ -56,10 +56,8 @@ export class ProductDetailsComponent implements OnInit {
     this._ProductsService.getSpecificProduct(this.productID).subscribe({
       next: (res)=>{
         this.productDetails = res.data
-        // console.log(this.productDetails);
       },
       error: (err)=>{
-        console.log(err);
       }
     })
   }
@@ -89,16 +87,10 @@ export class ProductDetailsComponent implements OnInit {
 
         this._CartService.updateCartProductQuantity(this.productID, this.productQuantity).subscribe({
           next: (res)=>{
-            console.log(res);
           }
         })
 
-        this.productQuantity = 1
-
-        console.log(res);
-      },
-      error: (err)=>{
-        console.log(err);
+        this.productQuantity = 1;
       }
     })
   }
@@ -115,11 +107,6 @@ export class ProductDetailsComponent implements OnInit {
             positionClass: 'toastPosition'
           }
         )
-
-        console.log(res);
-      },
-      error: (err)=>{
-        console.log(err);
       }
     })
   }

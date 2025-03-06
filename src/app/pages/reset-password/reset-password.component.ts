@@ -30,10 +30,8 @@ export class ResetPasswordComponent {
           this._AuthenticationService.decodeToken();
           this.isLoading = false;
           this._Router.navigate(['/login']);
-          console.log(res);
         },
         error: (err)=>{
-          console.log(err);
           this.isLoading = false;
         }
       })

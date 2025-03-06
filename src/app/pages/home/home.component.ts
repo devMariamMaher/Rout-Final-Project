@@ -1,5 +1,4 @@
-import { Spinner } from './../../../../node_modules/ngx-spinner/lib/ngx-spinner.enum.d';
-import { Component, ElementRef, inject, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { ProductsService } from '../../core/services/products/products.service';
 import { Subscription } from 'rxjs';
 import { IProduct } from '../../core/interfaces/procducts/iproduct';
@@ -25,12 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   allCategories:ICategory[] | null = null;
   allCategoriesSub!:Subscription;
   allWishlistData!:IWishlist;
-  // addedToWishlist:boolean = false;
-
-  // @ViewChild('wishlistIcon') wishlistIcon!:ElementRef;
-  // @ViewChild('redWishlistIcon') redWishlistIcon!:ElementRef;
-  // @ViewChildren('wishlistIcon') wishlistIcons!:QueryList<ElementRef>;
-  // @ViewChildren('redWishlistIcon') redWishlistIcons!:QueryList<ElementRef>;
 
   private _ProductsService = inject(ProductsService);
   private _CategoriesService = inject(CategoriesService);
@@ -109,79 +102,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         )
 
         this._CartService.cartCount.next(res.numOfCartItems)
-        console.log('api res', res.numOfCartItems);
-        console.log(this._CartService.cartCount);
       }
     })
   }
-
-  // toggleWishlistUI(existsInWishlist:boolean){
-  //   if(existsInWishlist){
-  //     this.wishlistIcon.nativeElement.classList.add('hidden')
-  //     this.redWishlistIcon.nativeElement.classList.remove('hidden')
-  //     this.redWishlistIcon.nativeElement.classList.add('flex')
-  //   } else{
-  //     this.wishlistIcon.nativeElement.classList.remove('hidden')
-  //     this.wishlistIcon.nativeElement.classList.add('flex')
-  //     this.redWishlistIcon.nativeElement.classList.add('hidden')
-  //   }
-  // }
-
-  // Working one:======================>
-
-  // toggleWishlistUI(pId: string, existsInWishlist: boolean) {
-  //   const index = this.allProducts?.findIndex(product => product._id === pId);
-  //   if (index === undefined || index === -1) return; // Ensure product exists
-
-  //   const wishlistIcon = this.wishlistIcons.toArray()[index]?.nativeElement;
-  //   const redWishlistIcon = this.redWishlistIcons.toArray()[index]?.nativeElement;
-
-  //   if (!wishlistIcon || !redWishlistIcon) return; // Prevent errors if elements don't exist
-
-  //   if (existsInWishlist) {
-  //     wishlistIcon.classList.add('hidden');
-  //     redWishlistIcon.classList.remove('hidden');
-  //     redWishlistIcon.classList.add('flex');
-  //   } else {
-  //     wishlistIcon.classList.remove('hidden');
-  //     wishlistIcon.classList.add('flex');
-  //     redWishlistIcon.classList.add('hidden');
-  //   }
-  // }
-
-
-  // isInWishlist(pId:string){
-  //   this._WishlistService.getLoggedUserWishlist().subscribe({
-  //     next: (res)=>{
-  //       this.allWishlistData = res
-  //       let productExist = this.allWishlistData.data.some((item)=> item._id == pId)
-
-  //       if(!productExist){
-  //         this.addToWishlist(pId);
-  //       } else{
-  //         this.toggleWishlistUI(true);
-  //       }
-  //     }
-  //   })
-  // }
-
-
-  // Working one:======================>
-
-  // isInWishlist(pId: string) {
-  //   this._WishlistService.getLoggedUserWishlist().subscribe({
-  //     next: (res) => {
-  //       this.allWishlistData = res;
-  //       let productExist = this.allWishlistData.data.some(item => item._id === pId);
-
-  //       if (!productExist) {
-  //         this.addToWishlist(pId);
-  //       } else {
-  //         this.toggleWishlistUI(pId, true);
-  //       }
-  //     }
-  //   });
-  // }
 
   addToWishlist(pId:string){
     this._WishlistService.addProductToWishlist(pId).subscribe({
@@ -195,19 +118,9 @@ export class HomeComponent implements OnInit, OnDestroy {
             positionClass: 'toastPosition'
           }
         )
-        // this.toggleWishlistUI(pId, true);
       }
     })
   }
-
-
-  // toggleWishlist(pId:string){
-  //   this.wishlistIcon.nativeElement.classList.add('hidden')
-  //   this.redWishlistIcon.nativeElement.classList.remove('hidden')
-  //   this.redWishlistIcon.nativeElement.classList.add('flex')
-  //   console.log(pId);
-  //   console.log(this.addedToWishlist);
-  // }
 
   ngOnDestroy(): void {
     this.allProductsSerb?.unsubscribe();

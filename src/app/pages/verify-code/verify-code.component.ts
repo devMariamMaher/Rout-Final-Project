@@ -27,10 +27,8 @@ export class VerifyCodeComponent {
         next: (res)=>{
           this.isLoading = false;
           this._Router.navigate(['/resetPassword']);
-          console.log(res);
         },
         error: (err)=>{
-          console.log(err);
           this.isLoading = false;
         }
       })
