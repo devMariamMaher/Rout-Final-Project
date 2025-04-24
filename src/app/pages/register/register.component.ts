@@ -13,6 +13,8 @@ import { AuthenticationService } from '../../core/services/authentication/authen
 export class RegisterComponent {
   errorMessage!:string;
   isLoading:boolean = false;
+  showPassword:boolean = false;
+  showRePassword:boolean = false;
 
   private _AuthenticationService = inject(AuthenticationService);
   private _Router = inject(Router);

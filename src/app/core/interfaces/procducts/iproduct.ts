@@ -16,6 +16,7 @@ export interface IProduct {
   createdAt: string
   updatedAt: string
   id: string
+  isInWishlist?: boolean;
 }
 
 export interface Subcategory {

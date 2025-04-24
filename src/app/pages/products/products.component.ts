@@ -30,6 +30,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsArrSub = this._ProductsService.getAllProducts().subscribe({
       next: (res)=>{
         this.productsArr = res.data;
+
+        this._WishlistService.getLoggedUserWishlist().subscribe({
+          next: (wishlistRes)=>{
+            const wishlistIds = new Set(wishlistRes.data.map((product:any)=> product._id));
+            this.productsArr?.forEach(product => product.isInWishlist = wishlistIds.has(product._id));
+          }
+        })
       }
     })
   }
@@ -51,20 +58,38 @@ export class ProductsComponent implements OnInit, OnDestroy {
     })
   }
 
-  addToWishlist(pId:string){
-    this._WishlistService.addProductToWishlist(pId).subscribe({
-      next: (res)=>{
-        this.toastr.success(res.message, '',
-          {
-            timeOut: 2000,
-            progressBar: true,
-            progressAnimation: 'decreasing',
-            toastClass: 'toastStyle',
-            positionClass: 'toastPosition'
-          }
-        )
-      }
-    })
+  toggleWishlist(product: IProduct){
+    if(!product.isInWishlist){
+      this._WishlistService.addProductToWishlist(product._id).subscribe({
+        next: (res)=>{
+          product.isInWishlist = true;
+          this.toastr.success(res.message, '',
+            {
+              timeOut: 2000,
+              progressBar: true,
+              progressAnimation: 'decreasing',
+              toastClass: 'toastStyle',
+              positionClass: 'toastPosition'
+            }
+          )
+        }
+      })
+    } else{
+      this._WishlistService.removeProductFormWishlist(product._id).subscribe({
+        next: (res)=>{
+          product.isInWishlist = false;
+          this.toastr.success(res.message, '',
+            {
+              timeOut: 2000,
+              progressBar: true,
+              progressAnimation: 'decreasing',
+              toastClass: 'toastStyle',
+              positionClass: 'toastPosition'
+            }
+          )
+        }
+      })
+    }
   }
 
   ngOnDestroy(): void {

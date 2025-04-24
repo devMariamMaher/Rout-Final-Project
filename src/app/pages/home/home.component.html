@@ -71,11 +71,11 @@
             <div>
               <button (click)="addToCart(product._id)" class="addToCart uppercase btn-main w-[70%] left-[50%] translate-x-[-50%] absolute bottom-[-50%]"><span class="me-2"><i class="fa-solid fa-cart-plus"></i></span>Add to cart</button>
 
-              <!-- @if(addedToWishlist == false){ -->
-                <button #wishlistIcon (click)="addToWishlist(product._id)" class="addToWishlist text-xl bg-white p-1 w-[30px] h-[30px] rounded-full flex justify-center items-center absolute top-[5%] right-[8%] hover:text-red-600 duration-[0.3s]"><span><i class="fa-regular fa-heart"></i></span></button>
-              <!-- } @else { -->
-                <button #redWishlistIcon class="hidden addToWishlist text-xl bg-white p-1 w-[30px] h-[30px] rounded-full flex justify-center items-center absolute top-[5%] right-[8%] text-red-600 hover:text-red-400 duration-[0.3s]"><span class=""><i class="fa-solid fa-heart"></i></span></button>
-              <!-- } -->
+              @if(!product.isInWishlist){
+                <button (click)="toggleWishlist(product)" class="addToWishlist text-xl bg-white p-1 w-[30px] h-[30px] rounded-full flex justify-center items-center absolute top-[5%] right-[8%] hover:text-red-600 duration-[0.3s]"><span class=""><i class="fa-regular fa-heart"></i></span></button>
+              } @else {
+                <button (click)="toggleWishlist(product)" class="addToWishlist text-xl text-red-600 p-1 w-[30px] h-[30px] rounded-full flex justify-center items-center absolute top-[5%] right-[8%] hover:text-red-400 duration-[0.3s]"><span class=""><i class="fa-solid fa-heart"></i></span></button>
+              }
 
             </div>
           </div>

@@ -55,7 +55,14 @@ export class ProductDetailsComponent implements OnInit {
 
     this._ProductsService.getSpecificProduct(this.productID).subscribe({
       next: (res)=>{
-        this.productDetails = res.data
+        this.productDetails = res.data;
+
+        this._WishlistService.getLoggedUserWishlist().subscribe({
+          next: (wishlistRes)=>{
+            const wishlistIds = new Set(wishlistRes.data.map((product:any) => product._id));
+            this.productDetails!.isInWishlist = wishlistIds.has(this.productDetails?._id);
+          }
+        })
       },
       error: (err)=>{
       }
@@ -95,19 +102,37 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-  addToWishlist(){
-    this._WishlistService.addProductToWishlist(this.productID).subscribe({
-      next: (res)=>{
-        this.toastr.success(res.message, '',
-          {
-            timeOut: 2000,
-            progressBar: true,
-            progressAnimation: 'decreasing',
-            toastClass: 'toastStyle',
-            positionClass: 'toastPosition'
-          }
-        )
-      }
-    })
+  toggleWishlist(){
+    if(!this.productDetails?.isInWishlist){
+      this._WishlistService.addProductToWishlist(this.productID).subscribe({
+        next: (res)=>{
+          this.productDetails!.isInWishlist = true;
+          this.toastr.success(res.message, '',
+            {
+              timeOut: 2000,
+              progressBar: true,
+              progressAnimation: 'decreasing',
+              toastClass: 'toastStyle',
+              positionClass: 'toastPosition'
+            }
+          )
+        }
+      })
+    } else{
+      this._WishlistService.removeProductFormWishlist(this.productID).subscribe({
+        next: (res)=>{
+          this.productDetails!.isInWishlist = false;
+          this.toastr.success(res.message, '',
+            {
+              timeOut: 2000,
+              progressBar: true,
+              progressAnimation: 'decreasing',
+              toastClass: 'toastStyle',
+              positionClass: 'toastPosition'
+            }
+          )
+        }
+      })
+    }
   }
 }
